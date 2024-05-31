@@ -73,7 +73,8 @@ pipeline {
             steps {
                 script {
                     sh 'chmod 600 /var/lib/jenkins/workspace/Harun/firstkey.pem'
-                    sh 'ansible-playbook -i inventory_aws_ec2.yml docker.yml'
+                    sh 'ansible-playbook -i inventory_aws_ec2.yml --private-key=/var/lib/jenkins/workspace/Harun/firstkey.pem docker.yml'
+                    // sh 'ansible-playbook -i inventory_aws_ec2.yml docker.yml'
                     sh 'ansible-playbook -i inventory_aws_ec2.yml postgresql.yml --extra-vars "ecr_repo_name=${env.ECR_REPO_NAME}/postgresql"'
                     sh 'ansible-playbook -i inventory_aws_ec2.yml nodejs.yml --extra-vars "ecr_repo_name=${env.ECR_REPO_NAME}/nodejs"'
                     sh 'ansible-playbook -i inventory_aws_ec2.yml react.yml --extra-vars "ecr_repo_name=${env.ECR_REPO_NAME}/react"'
