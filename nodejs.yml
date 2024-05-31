@@ -1,0 +1,24 @@
+- name: configure nodejs container
+  hosts: _ansible_nodejs
+  become: true
+  # vars_files:
+  #   - secret.yml
+  environment:
+    ecr_repo_name: "{ECR_REPO_NAME}/nodejs"
+    DB_HOST: "{{ hostvars['_ansible_postgresql'].postgresql_ip }}"
+  tasks: 
+    - name: Pull Nodejs Image
+      docker_image:
+        name: "{{ ecr_repo_name }}"
+        tag: latest
+        source: pull
+
+    - name: Run Nodejs Container
+      docker_container:
+        name: nodejs
+        image: "{{ ecr_repo_name }}"
+        state: started
+        restart_policy: always
+        ports:
+          - "5000:5000"
+          

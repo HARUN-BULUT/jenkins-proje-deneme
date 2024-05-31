@@ -1,0 +1,7 @@
+REACT_APP_BASE_URL=http://${NODE_IP}:5000/
+
+
+
+
+
+

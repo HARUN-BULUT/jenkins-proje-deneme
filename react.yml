@@ -1,0 +1,23 @@
+- name: configure react container
+  hosts: _ansible_react
+  become: true
+  # vars_files:
+  #   - secret.yml
+  environment:
+    ecr_repo_name: "{ECR_REPO_NAME}/react"
+  tasks: 
+ 
+    - name: Pull React Image
+      docker_image:
+        name: "{{ ecr_repo_name }}"
+        tag: latest
+        source: pull
+
+    - name: Run React Container
+      docker_container:
+        name: react
+        image: "{{ ecr_repo_name }}"
+        state: started
+        restart_policy: always
+        ports:
+          - "3000:3000"

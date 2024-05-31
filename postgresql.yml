@@ -1,0 +1,83 @@
+- name: configure postgre container
+  hosts: _ansible_postgresql
+  become: true
+  vars:
+    postgresql_container_name: postgresql
+
+  environment:
+    ecr_repo_name: "{ECR_REPO_NAME}/postgresql"
+  tasks:
+
+
+    - name: Pull PostgreSQL Image
+      docker_image:
+        name: "{{ ecr_repo_name }}"
+        tag: latest
+        source: pull
+
+    - name: Run PostgreSQL Container
+      docker_container:
+        name: postgresql
+        image: "{{ ecr_repo_name }}"
+        state: started
+        ports:
+          - "5432:5432"
+        restart_policy: always
+        env:     
+          DB_USER: postgres
+          DB_PASSWORD: Pp123456789
+          DB_NAME: clarustodo
+        volumes:
+          -  /db-data:/var/lib/postgresql/data
+
+    - name: Get PostgreSQL Container IP
+      command: docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {{ postgresql_container_name }}
+      register: postgresql_ip
+    - name: Set PostgreSQL IP Fact
+      set_fact:
+        postgresql_ip: "{{ postgresql_ip.stdout }}"
+
+
+    # - name: remove cw_postgre container
+    #   community.docker.docker_container:
+    #     name: cw_postgre
+    #     state: absent
+    #     force_kill: true
+
+    # - name: remove clarusway/postgre image
+    #   community.docker.docker_image:
+    #     name: clarusway/postgre
+    #     state: absent
+
+    # - name: build the container image
+    #   community.docker.docker_image:
+    #     name: clarusway/postgre
+    #     build:
+    #       path: /home/ec2-user/postgresql
+    #     source: build
+    #     state: present
+    #   register: image_info
+
+    # - name: print the image info 
+    #   ansible.builtin.debug:
+    #     var: image_info
+
+    # - name: launch postgresql docker container
+    #   community.docker.docker_container:
+    #     name: cw_postgre
+    #     image: clarusway/postgre
+    #     state: started
+    #     ports:
+    #       - "5432:5432"
+        # env:
+        #   POSTGRES_PASSWORD: "{{ password }}"
+    #     volumes:
+    #       - /db-data:/var/lib/postgresql/data
+    #   register: container_info
+
+    # - name: print the container info
+    #   ansible.builtin.debug:
+    #     var: container_info  
+          
+
+
