@@ -7,7 +7,7 @@ pipeline {
         AWS_REGION = 'us-east-1'
     }
 
-    // stages {
+    stages {
     //     stage('Clone Repository') {
     //         steps {
     //             git url: "${REPO_URL}"
