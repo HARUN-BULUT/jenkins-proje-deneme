@@ -52,14 +52,14 @@ pipeline {
 
 
 
-//         stage('Terraform Apply') {
-//             steps {
-//                 script {
-//                     sh 'terraform init'
-//                     sh 'terraform apply -var "controlinstancetype=${CONTROL_INSTANCE_TYPE}" -auto-approve'
-//                 }
-//             }
-//         }
+        stage('Terraform Apply') {
+            steps {
+                script {
+                    sh 'terraform init'
+                    sh 'terraform apply -var "controlinstancetype=${CONTROL_INSTANCE_TYPE}" -auto-approve'
+                }
+            }
+        }
 
 //         stage('wait') {
 //             steps {
