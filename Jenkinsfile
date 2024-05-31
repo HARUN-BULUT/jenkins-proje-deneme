@@ -30,17 +30,17 @@ pipeline {
 
         stage('Build and Push Docker Images') {
             steps {
-                dir('student_files') {
+                dir('student_files/postgresql') {
             script {
                 sh 'docker build -t ${ECR_REPO_NAME}/postgresql:latest -f dockerfile-postgresql .'
             }
         }
-                dir('student_files') {
+                dir('student_files/nodejs') {
             script {
                 sh 'docker build -t ${ECR_REPO_NAME}/nodejs:latest -f dockerfile-nodejs .'
             }
         }
-                dir('student_files') {
+                dir('student_files/react') {
             script {
                 sh 'docker build -t ${ECR_REPO_NAME}/react:latest -f dockerfile-react .'
             }
