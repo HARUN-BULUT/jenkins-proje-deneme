@@ -42,9 +42,9 @@ pipeline {
         stage('Build and Push Docker Images') {
             steps {
                 script {
-                    sh 'docker build -t ${ECR_REPO_NAME}/postgresql:latest -f dockerfile-postgresql ./postgresql'
-                    sh 'docker build -t ${ECR_REPO_NAME}/nodejs:latest -f dockerfile-nodejs ./nodejs'
-                    sh 'docker build -t ${ECR_REPO_NAME}/react:latest -f dockerfile-react ./react'
+                    sh 'docker build -t ${ECR_REPO_NAME}/postgresql:latest -f dockerfile-postgresql ./student_files/postgresql'
+                    sh 'docker build -t ${ECR_REPO_NAME}/nodejs:latest -f dockerfile-nodejs ./student_files/nodejs'
+                    sh 'docker build -t ${ECR_REPO_NAME}/react:latest -f dockerfile-react ./student_files/react'
                     
                     sh 'aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REPO_NAME}'
                     
