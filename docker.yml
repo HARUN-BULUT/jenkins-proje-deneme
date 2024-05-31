@@ -96,3 +96,9 @@
       command: "docker login --username AWS --password-stdin 904602740498.dkr.ecr.us-east-1.amazonaws.com"
       args:
         stdin: "{{ ecr_login_password.stdout }}"
+
+    # - name: log in to AWS ec2-user
+    #   ansible.builtin.shell: |
+    #     export PATH=/usr/local/bin:$PATH
+    #     source ~/.bash_profile
+    #     aws ecr get-login-password --region {{ aws_region }} | docker login --username AWS --password-stdin {{ ecr_registry }}
