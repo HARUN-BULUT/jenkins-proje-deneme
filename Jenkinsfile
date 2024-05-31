@@ -19,7 +19,7 @@ pipeline {
                 script {
                     // AWS CLI komutu çalıştırma
                     sh '''
-                    aws ecr create-repository --repository-name ${ECR_REPO_NAME}/postgresql --region $AWS_REGION
+                    aws ecr create-repository --repository-name postgresql --region $AWS_REGION
                     aws ecr create-repository --repository-name ${ECR_REPO_NAME}/nodejs --region $AWS_REGION
                     aws ecr create-repository --repository-name ${ECR_REPO_NAME}/react --region $AWS_REGION
                     '''
