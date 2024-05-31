@@ -5,7 +5,7 @@
   #   - secret.yml
   environment:
     ecr_repo_name: "{ECR_REPO_NAME}/nodejs"
-    DB_HOST: "{{ hostvars['_ansible_postgresql'].postgresql_ip }}"
+    # DB_HOST: "{{ hostvars['_ansible_postgresql'].postgresql_ip }}"
   tasks: 
     - name: Pull Nodejs Image
       docker_image:

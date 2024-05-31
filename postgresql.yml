@@ -30,12 +30,12 @@
         volumes:
           -  /db-data:/var/lib/postgresql/data
 
-    - name: Get PostgreSQL Container IP
-      command: docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {{ postgresql_container_name }}
-      register: postgresql_ip
-    - name: Set PostgreSQL IP Fact
-      set_fact:
-        postgresql_ip: "{{ postgresql_ip.stdout }}"
+    # - name: Get PostgreSQL Container IP
+    #   command: docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {{ postgresql_container_name }}
+    #   register: postgresql_ip
+    # - name: Set PostgreSQL IP Fact
+    #   set_fact:
+    #     postgresql_ip: "{{ postgresql_ip.stdout }}"
 
 
     # - name: remove cw_postgre container
