@@ -173,9 +173,6 @@ output "repository_url" {
 #   value = aws_instance.control_node.*.private_ip
 # }
 
-provider "aws" {
-  region = "us-west-2" # Kullanmak istediğiniz AWS bölgesini belirtin
-}
 # ECR Full Access politikasının tanımlanması
 data "aws_iam_policy_document" "ecr_full_access" {
   statement {
