@@ -54,16 +54,33 @@
         - python3
         - python3-pip
 
-    - name: Install AWS CLI using pip
-      pip:
-        name: awscli
-        state: present
-        executable: pip3
+    # - name: Install AWS CLI using pip
+    #   pip:
+    #     name: awscli
+    #     state: present
+    #     executable: pip3
 
-    - name: Verify AWS CLI installation
-      command: aws --version
-      register: aws_cli_version
+    # - name: Verify AWS CLI installation
+    #   command: aws --version
+    #   register: aws_cli_version
 
-    - name: Display AWS CLI version
-      debug:
-        msg: "AWS CLI version: {{ aws_cli_version.stdout }}"
+    # - name: Display AWS CLI version
+    #   debug:
+    #     msg: "AWS CLI version: {{ aws_cli_version.stdout }}"
+    
+    - name: install aws cli
+      ansible.builtin.get_url:
+        url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+        dest: /home/ec2-user/awscliv2.zip
+
+    - name: unzip zip file
+      ansible.builtin.unarchive:
+        src: /home/ec2-user/awscliv2.zip
+        dest: /home/ec2-user
+        remote_src: True
+
+    - name: run the installer
+      ansible.builtin.command:
+      args:
+        cmd: "./aws/install"
+        creates: /usr/local/bin/aws
