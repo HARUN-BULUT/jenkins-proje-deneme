@@ -86,3 +86,12 @@
       args:
         cmd: "./aws/install"
         creates: /usr/local/bin/aws
+
+    - name: Get ECR login password
+      command: "aws ecr get-login-password --region us-east-1"
+      register: ecr_login_password
+
+    - name: Login to ECR
+      command: "docker login --username AWS --password-stdin 904602740498.dkr.ecr.us-east-1.amazonaws.com"
+      args:
+        stdin: "{{ ecr_login_password.stdout }}"
