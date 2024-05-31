@@ -31,9 +31,9 @@ pipeline {
                 script {
                     // AWS CLI komutu çalıştırma
                     sh '''
-                    aws ecr create-repository --repository-name ${ECR_REPO_NAME}/postgresql --region $AWS_REGION
-                    aws ecr create-repository --repository-name ${ECR_REPO_NAME}/nodejs --region $AWS_REGION
-                    aws ecr create-repository --repository-name ${ECR_REPO_NAME}/react --region $AWS_REGION
+                    aws ecr create-repository --repository-name postgresql --region ${AWS_REGION}
+                    aws ecr create-repository --repository-name nodejs --region ${AWS_REGION}
+                    aws ecr create-repository --repository-name react --region ${AWS_REGION}
                     '''
                 }
             }
@@ -67,9 +67,9 @@ pipeline {
             steps {
                 script {
                     sh 'ansible-playbook -i inventory_aws_ec2.yml docker.yml'
-                    sh 'ansible-playbook -i inventory_aws_ec2.yml postgresql.yml --extra-vars "ecr_repo_name=${env.ECR_REPO_NAME}/postgresql'
-                    sh 'ansible-playbook -i inventory_aws_ec2.yml nodejs.yml --extra-vars "ecr_repo_name=${env.ECR_REPO_NAME}/nodejs'
-                    sh 'ansible-playbook -i inventory_aws_ec2.yml react.yml --extra-vars "ecr_repo_name=${env.ECR_REPO_NAME}/react'
+                    sh 'ansible-playbook -i inventory_aws_ec2.yml postgresql.yml --extra-vars "ecr_repo_name=${env.ECR_REPO_NAME}/postgresql"'
+                    sh 'ansible-playbook -i inventory_aws_ec2.yml nodejs.yml --extra-vars "ecr_repo_name=${env.ECR_REPO_NAME}/nodejs"'
+                    sh 'ansible-playbook -i inventory_aws_ec2.yml react.yml --extra-vars "ecr_repo_name=${env.ECR_REPO_NAME}/react"'
                 }
             }
         }
