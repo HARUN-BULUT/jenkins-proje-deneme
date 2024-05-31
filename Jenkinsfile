@@ -7,18 +7,18 @@ pipeline {
         AWS_REGION = 'us-east-1'
     }
 
-    stages {
-        stage('Clone Repository') {
-            steps {
-                git url: "${REPO_URL}"
-            }
-        }
+    // stages {
+    //     stage('Clone Repository') {
+    //         steps {
+    //             git url: "${REPO_URL}"
+    //         }
+    //     }
 
         stage('Terraform Apply') {
             steps {
                 script {
-                    sh 'cd ./denem1 terraform init'
-                    sh 'cd./denem1 terraform apply -auto-approve'
+                    sh 'terraform init'
+                    sh 'terraform apply -auto-approve'
                 }
             }
         }
