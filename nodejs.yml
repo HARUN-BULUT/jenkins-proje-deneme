@@ -7,6 +7,17 @@
     ecr_repo_name: "{ECR_REPO_NAME}/nodejs"
     # DB_HOST: "{{ hostvars['_ansible_postgresql'].postgresql_ip }}"
   tasks: 
+    - name: remove nodejs container
+      community.docker.docker_container:
+        name: nodejs
+        state: absent
+        force_kill: true
+
+    - name: remove nodejs image
+      community.docker.docker_image:
+        name: "{{ ecr_repo_name }}"
+        state: absent
+
     - name: Pull Nodejs Image
       docker_image:
         name: "{{ ecr_repo_name }}"

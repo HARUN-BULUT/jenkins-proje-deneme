@@ -8,6 +8,16 @@
     ecr_repo_name: "{ECR_REPO_NAME}/postgresql"
   tasks:
 
+    - name: remove postgresql container
+      community.docker.docker_container:
+        name: postgresql
+        state: absent
+        force_kill: true
+
+    - name: remove postgresql image
+      community.docker.docker_image:
+        name: "{{ ecr_repo_name }}"
+        state: absent
 
     - name: Pull PostgreSQL Image
       docker_image:

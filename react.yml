@@ -6,6 +6,16 @@
   environment:
     ecr_repo_name: "{ECR_REPO_NAME}/react"
   tasks: 
+    - name: remove react container
+      community.docker.docker_container:
+        name: react
+        state: absent
+        force_kill: true
+
+    - name: remove react image
+      community.docker.docker_image:
+        name: "{{ ecr_repo_name }}"
+        state: absent  
  
     - name: Pull React Image
       docker_image:
