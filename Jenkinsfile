@@ -5,6 +5,7 @@ pipeline {
         // REPO_URL = 'https://github.com/HARUN-BULUT/jenkins-proje-deneme.git'
         ECR_REPO_NAME = '904602740498.dkr.ecr.us-east-1.amazonaws.com'  // my-ecr-repo
         AWS_REGION = 'us-east-1'
+        CONTROL_INSTANCE_TYPE = 't2.micro' // İstediğiniz değeri buraya yazın
     }
 
     stages {
@@ -78,7 +79,7 @@ pipeline {
             steps {
                 script {
                     sh 'terraform init'
-                    sh 'terraform apply -auto-approve'
+                    sh 'terraform apply -var "controlinstancetype=${CONTROL_INSTANCE_TYPE}" -auto-approve'
                 }
             }
         }
