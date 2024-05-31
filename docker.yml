@@ -22,7 +22,9 @@
 
     - name: Install yum utils
       ansible.builtin.yum:
-        name: "yum-utils"
+        name: 
+          - "yum-utils"
+          - unzip 
         state: latest
 
     - name: Add Docker repo
@@ -67,7 +69,7 @@
     # - name: Display AWS CLI version
     #   debug:
     #     msg: "AWS CLI version: {{ aws_cli_version.stdout }}"
-    
+
     - name: install aws cli
       ansible.builtin.get_url:
         url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
