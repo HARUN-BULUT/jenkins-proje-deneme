@@ -34,6 +34,7 @@ resource "aws_instance" "nodes" {
   ami = var.myami
   instance_type = var.instancetype
   count = var.num
+  iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
   key_name = var.mykey
   vpc_security_group_ids = [aws_security_group.tf-sec-gr.id]
   tags = {
@@ -171,3 +172,54 @@ output "repository_url" {
 # output "privates" {
 #   value = aws_instance.control_node.*.private_ip
 # }
+
+provider "aws" {
+  region = "us-west-2" # Kullanmak istediğiniz AWS bölgesini belirtin
+}
+# ECR Full Access politikasının tanımlanması
+data "aws_iam_policy_document" "ecr_full_access" {
+  statement {
+    actions = [
+      "ecr:*",
+    ]
+    resources = ["*"]
+  }
+}
+# IAM rolünün oluşturulması
+resource "aws_iam_role" "ec2_role" {
+  name = "ec2_role_with_ecr_full_access"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+      },
+    ]
+  })
+}
+# ECR Full Access politikasının IAM rolüne eklenmesi
+resource "aws_iam_role_policy" "ec2_role_policy" {
+  name   = "ec2_role_policy"
+  role   = aws_iam_role.ec2_role.id
+  policy = data.aws_iam_policy_document.ecr_full_access.json
+}
+# # EC2 instanslarının oluşturulması
+# resource "aws_instance" "agent_nodes" {
+#   count         = 3 # 3 adet EC2 instansı oluştur
+#   ami           = "ami-12345678" # Agent node için uygun bir AMI ID'si belirtin
+#   instance_type = "t2.micro" # Agent node için uygun bir instance tipi belirtin
+#   key_name      = "jenkins-key" # Agent node'da kullanılacak olan SSH anahtar çiftinin adını belirtin
+#   iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
+#   tags = {
+#     Name = "agent_node_${count.index}"
+#   }
+# }
+# IAM rolü için instance profile oluşturulması
+resource "aws_iam_instance_profile" "ec2_instance_profile" {
+  name = "ec2_instance_profile_with_ecr_full_access"
+  role = aws_iam_role.ec2_role.name
+}
