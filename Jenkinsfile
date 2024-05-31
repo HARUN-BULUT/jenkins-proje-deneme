@@ -17,8 +17,8 @@ pipeline {
         stage('Terraform Apply') {
             steps {
                 script {
-                    sh 'terraform init'
-                    sh 'terraform apply -auto-approve'
+                    sh 'cd ./denem1 terraform init'
+                    sh 'cd./denem1 terraform apply -auto-approve'
                 }
             }
         }
