@@ -14,18 +14,6 @@ pipeline {
     //         }
     //     }
 
-        stage('Terraform Apply') {
-            steps {
-                script {
-                    sh 'terraform init'
-                    sh 'terraform apply -auto-approve'
-                }
-            }
-        }
-
-
-
-       
         stage('Create ECR Repository') {
             steps {
                 script {
@@ -39,6 +27,9 @@ pipeline {
             }
         }
 
+
+
+
         stage('Build and Push Docker Images') {
             steps {
                 script {
@@ -51,6 +42,16 @@ pipeline {
                     sh 'docker push ${ECR_REPO_NAME}/postgresql:latest'
                     sh 'docker push ${ECR_REPO_NAME}/nodejs:latest'
                     sh 'docker push ${ECR_REPO_NAME}/react:latest'
+                }
+            }
+        }
+
+
+        stage('Terraform Apply') {
+            steps {
+                script {
+                    sh 'terraform init'
+                    sh 'terraform apply -auto-approve'
                 }
             }
         }
