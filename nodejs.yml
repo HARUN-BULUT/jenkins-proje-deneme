@@ -32,4 +32,10 @@
         restart_policy: always
         ports:
           - "5000:5000"
+        env:
+          DB_USER=postgres
+          DB_PASSWORD=Pp123456789
+          DB_NAME=clarustodo
+          DB_PORT=5432
+          DB_HOST=172.31.28.239
           

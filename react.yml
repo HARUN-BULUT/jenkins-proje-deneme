@@ -31,3 +31,5 @@
         restart_policy: always
         ports:
           - "3000:3000"
+        env:
+          REACT_APP_BASE_URL: http://54.89.187.200:5000/
