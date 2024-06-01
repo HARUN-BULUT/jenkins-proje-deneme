@@ -10,7 +10,7 @@ pipeline {
     stages {
 
         stage('terraform destroy') {
-            steps { sh 'terraform destroy -auto-approve' }
+            steps { sh 'terraform destroy -auto-approve -var "controlinstancetype=${CONTROL_INSTANCE_TYPE}" -auto-approve ' }
         }
 
 //         stage('Create ECR Repository') {
