@@ -10,18 +10,18 @@ pipeline {
     stages {
 
 
-        // stage('Create ECR Repository') {
-        //     steps {
-        //         script {
-        //             // AWS CLI komutu çalıştırma
-        //             sh '''
-        //             aws ecr create-repository --repository-name postgresql --region $AWS_REGION
-        //             aws ecr create-repository --repository-name nodejs --region $AWS_REGION
-        //             aws ecr create-repository --repository-name react --region $AWS_REGION
-        //             '''
-        //         }
-        //     }
-        // }
+        stage('Create ECR Repository') {
+            steps {
+                script {
+                    // AWS CLI komutu çalıştırma
+                    sh '''
+                    aws ecr create-repository --repository-name postgresql --region $AWS_REGION
+                    aws ecr create-repository --repository-name nodejs --region $AWS_REGION
+                    aws ecr create-repository --repository-name react --region $AWS_REGION
+                    '''
+                }
+            }
+        }
 
 
         stage('Build and Push Docker Images') {
