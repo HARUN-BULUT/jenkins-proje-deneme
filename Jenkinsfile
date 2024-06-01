@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        ECR_REPO_NAME = '904602740498.dkr.ecr.us-east-1.amazonaws.com'  // my-ecr-repo
+        ECR_REPO_NAME = '904602740498.dkr.ecr.us-east-1.amazonaws.com' 
         AWS_REGION = 'us-east-1'
         CONTROL_INSTANCE_TYPE = 't2.micro' // İstediğiniz değeri buraya yazın
     }
